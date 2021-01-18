@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { Container, Nav } from 'react-bootstrap';
 
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
 function Header(props) {
   return (
@@ -13,19 +13,21 @@ function Header(props) {
           </NavLink>
         </Nav.Item>
         {props.user.username != null && (
-          <Nav.Item>
-            <NavLink to="/dashboard" className="nav-link">
-              Dashboard
+          <>
+            <Nav.Item>
+              <NavLink to="/dashboard" className="nav-link">
+                Dashboard
             </NavLink>
-          </Nav.Item>
+            </Nav.Item>
+
+            <Nav.Item>
+              <NavLink to="/newActivity" className="nav-link">
+                Ny aktivitet
+              </NavLink>
+            </Nav.Item>
+          </>
         )}
-        {props.user.roles === "admin" && (
-          <Nav.Item>
-            <NavLink to="/dnd" className="nav-link">
-              dnd
-          </NavLink>
-          </Nav.Item>
-        )}
+
       </Nav>
     </Container>
   );

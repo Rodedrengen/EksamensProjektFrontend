@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DashBoard from './components/DashBoard';
-import Dnd from './components/Dnd';
 import Home from './components/Home';
+import NewActivity from './components/NewActivity';
 import {
   Switch,
   Route,
@@ -10,6 +10,8 @@ import {
 } from 'react-router-dom';
 import Header from './components/Header';
 import facade from './apiFacade';
+
+import { ToastContainer, toast } from 'react-toastify';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -23,10 +25,23 @@ function App() {
       setUser(user);
       setLoggedIn(true);
     }
-  },[]);
+  }, []);
 
   return (
     <>
+
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
       <Header user={user} loggedIn={loggedIn} />
       <Switch>
         <Route exact path="/">
@@ -35,9 +50,10 @@ function App() {
         <Route path="/dashboard">
           <DashBoard setUser={setUser} admin={admin} setAdmin={setAdmin} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         </Route>
-        <Route path="/dnd">
-          <Dnd user={user} setUser={setUser} admin={admin} setAdmin={setAdmin} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+        <Route path="/newActivity">
+          <NewActivity setUser={setUser} admin={admin} setAdmin={setAdmin} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         </Route>
+        
         <Route path="/404">
           <NoMatch />
         </Route>

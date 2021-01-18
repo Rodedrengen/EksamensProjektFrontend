@@ -1,5 +1,6 @@
 import jwt_decode from 'jwt-decode';
 import { URL } from './settings';
+import utils from './components/utils'
 
 function handleHttpErrors(res) {
   if (!res.ok) {
@@ -51,23 +52,37 @@ function apiFacade() {
       });
   };
 
-  const saveChar = (pc) => {
-    
-    const options = makeOptions('POST', false , {
-      name: pc.name,
-      race: pc.race,
-      classes: pc.klasse,
+  const register = (user, password, weight, age) => {
+    const options = makeOptions('POST', false, {
+      username: user,
+      password: password,
+      userWeight: weight,
+      userAge: age
     });
-    console.log(options)
-    return fetch(URL + '/info', options)
+    return fetch(URL + '/info/register', options)
       .then(handleHttpErrors)
-      .then((res) => {
-        
-      })
+      .then(utils.notify("You can now login", "succes"))
       .catch((err) => {
         throw err;
       });
-  };
+  }
+  const logActivity = (type, duration, distance, comment, userName, city) =>{
+    const options = makeOptions('POST', false, {
+      Activitytype: type,
+      Activityduration: duration,
+      Activitydistance: distance,
+      Activitycomment: comment,
+      ActivityuserName: userName,
+      ActivityCity: city
+    });
+
+    return fetch(URL + '/activity', options)
+      .then(handleHttpErrors)
+      .then(utils.notify("Saved activity", "succes"))
+      .catch((err) => {
+        throw err;
+      });
+  }
 
   const fetchData = (endpoint, httpMethod) => {
     const options = makeOptions(httpMethod, true); //True add's the token
@@ -99,7 +114,8 @@ function apiFacade() {
     logout,
     fetchData,
     getUser,
-    saveChar
+    register,
+    logActivity
   };
 }
 const facade = apiFacade();

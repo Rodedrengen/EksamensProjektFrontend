@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import Login from './Login';
 
@@ -12,22 +12,12 @@ function Home(props) {
         <Row>
           <Col>
             <h1>Welcome</h1>
-            <h2>How to get started with this project:</h2>
-            <ol>
-              <li>Run 'npm install' to install dependencies</li>
-              <li>Run 'npm start' to begin local server</li>
-              <li>Change the server URL in /src/settings.js</li>
-              <li>
-                To add a new page, add it to the Switch in App.js, and the
-                header.jsx component
-                <ul>
-                  <li>
-                    Make sure the 'to' attribute in Header matches the 'path'
-                    attribute in App
-                  </li>
-                </ul>
-              </li>
-            </ol>
+            <h2>How to get started:</h2>
+
+            <li>If you're not a user create a user on the right
+            Then you can begin logging your data
+              And change your life forever</li>
+
           </Col>
           {!props.loggedIn && (
             <Col sm="4">

@@ -10,6 +10,7 @@ function UserInfo() {
   //Get user data
   useEffect(() => {
     const user = facade.getUser();
+    
     if (user) {
       setUserData(user);
 
