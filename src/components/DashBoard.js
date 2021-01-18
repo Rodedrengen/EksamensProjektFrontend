@@ -1,21 +1,35 @@
-import React, { useEffect } from 'react';
-import { Col, Row, Container, Button } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Col, Row, Container, Button, Table } from 'react-bootstrap';
 import facade from '../apiFacade';
-import UserInfo from './UserInfo';
-import RemoteServerFetch from './RemoteServerFetch';
+import utils from './utils';
 import { useHistory } from 'react-router-dom';
 
 function DashBoard(props) {
   const history = useHistory();
 
+  const [user, setUserData] = useState(null);
+  const [activites, setActivites] = useState(null);
+
   useEffect(() => {
     const user = facade.getUser();
     if (user) {
+      setUserData(user);
       history.push('/dashboard');
     } else {
       history.push('/');
     }
   }, []);
+
+  useEffect(() => {
+    if(user != null){
+      facade.fetchData("/activity/" + user.username, "GET")
+      .then((data) => setActivites(data))
+      .catch((err) => {
+        utils.notify("Something went wrong", "Error")
+      });
+    }
+    
+  }, [user]);
 
   const logout = () => {
     facade.logout();
@@ -31,12 +45,30 @@ function DashBoard(props) {
         Logout
       </Button>
       <Row>
-        <Col>
-          <UserInfo />
-        </Col>
-        <Col>
-          <RemoteServerFetch />
-        </Col>
+      {activites ? (
+        
+        <Table striped bordered hover size="sm">
+          {console.log(activites)}
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            {activites.map((row, index) => {
+              {console.log("mappning")}
+              <tr key={index.toString()}><td>{index}</td><td>{row.ooo}</td><td>{row.cityInfo.name}</td></tr>
+              {console.log("OOO")}
+            })}
+          </tbody>
+        </Table>
+        
+        ) : (<p>
+          Her findes ikke noget
+        </p>)}
       </Row>
     </Container>
   );

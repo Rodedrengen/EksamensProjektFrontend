@@ -30,13 +30,13 @@ function Login(props) {
         })
         .catch((err) => {
           if (err.status == 403) {
-            setError('Wrong username or password!');
+            utils.notify('Wrong username or password!',"error");
           } else {
-            setError('Something went wrong while logging in');
+            utils.notify('Something went wrong while logging in',"error");
           }
         });
     } else {
-      setError('Missing username or password');
+      utils.notify('Missing username or password',"error");
     }
   };
 
@@ -49,7 +49,7 @@ function Login(props) {
         facade
           .register(regCredentials.username, regCredentials.password, regCredentials.weight, regCredentials.age)
           .catch((err) => {
-            setError("Something else went wrong")
+            utils.notify("Something else went wrong","error")
           })
       } else {
         utils.notify("The two passwords does not match", "error");

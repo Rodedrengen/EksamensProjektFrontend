@@ -59,7 +59,7 @@ function apiFacade() {
       userWeight: weight,
       userAge: age
     });
-    return fetch(URL + '/info/register', options)
+    return fetch(URL + '/user/register', options)
       .then(handleHttpErrors)
       .then(utils.notify("You can now login", "succes"))
       .catch((err) => {

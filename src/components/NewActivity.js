@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import facade from '../apiFacade';
 import { useHistory } from 'react-router-dom';
+import utils from './utils';
 import { Col, Row, Form, Button, Alert, Container, InputGroup } from 'react-bootstrap';
 
 function NewActivity(props) {
@@ -15,11 +16,11 @@ function NewActivity(props) {
         evt.preventDefault();
 
         if (data.type !== '' && data.type !== 0 && data.distance !== 0) {
-            console.log("logActivity")
+            
             facade
                 .logActivity(data.type, data.duration, data.distance, data.comment, user.username, data.city)
                 .catch((err) => {
-                    setError("something went wrong saving");
+                    utils.notify("something went wrong saving","error");
                 })
         }
     }
